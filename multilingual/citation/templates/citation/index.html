@@ -1,0 +1,61 @@
+<!-- your_template.html -->
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Multilingual Database</title>
+    <style>
+        table {
+            border-collapse: collapse;
+            width: 100%;
+        }
+
+        th, td {
+            border: 1px solid #dddddd;
+            text-align: left;
+            padding: 8px;
+        }
+        .search{
+            display:flex;
+            align-items: center;
+            justify-content: center;
+        }
+    </style>
+</head>
+<body>
+    <div class="search" >
+        <form action="" method="POST">
+            {% csrf_token %}
+            <input type="text" id="search" name="search">
+            {% if flag %}
+            <a href="http://127.0.0.1:8000/{{lib}}/">Close</a>
+            {% else %}
+            <button type="submit" >Search</button>
+            {% endif %}
+        </form>
+    </div>
+    <h1>{{lib|capfirst}} Dataset</h1>
+
+    <table>
+        <thead>
+            <tr>
+                {% for heading in heads %}
+                    <th>{{ heading }}</th>
+                {% endfor %}
+            </tr>
+        </thead>
+        <tbody>
+            {% for row in data %}
+                <tr>
+                    <td>{{ row.column1 }}</td>
+                    <td>{{ row.column2 }}</td>
+                    <td>{{ row.column3 }}</td>
+                    <td>{{ row.column4 }}</td>
+                    <td>{{ row.column5 }}</td>
+                    <td>{{ row.column6 }}</td>
+                    <td>{{ row.column7 }}</td>
+                </tr>
+            {% endfor %}
+        </tbody>
+    </table>
+</body>
+</html>
