@@ -1,0 +1,63 @@
+<!-- your_template.html -->
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Multilingual Database</title>
+    <style>
+        table {
+            border-collapse: collapse;
+            width: 100%;
+        }
+
+        th, td {
+            border: 1px solid #dddddd;
+            text-align: left;
+            padding: 8px;
+        }
+        .search{
+            display:flex;
+            align-items: center;
+            justify-content: center;
+        }
+    </style>
+</head>
+<body>
+    <div class="search" >
+        <form action="" method="POST">
+            {% csrf_token %}
+            <input type="text" id="search" name="search">
+            {% comment %} {% if flag %}
+            <a href="http://127.0.0.1:8000/{{lib}}/">Close</a> {% endcomment %}
+            {% comment %} {% else %} {% endcomment %}
+            <select name="type_of_search" id="filterDropdown">
+                <option value="1">Search by Title</option>
+                <option value="2">Search by Accession number</option>
+                <option value="3">Search by Author last name</option>
+                <option value="4">Search by Author first name</option>
+                <option value="5">Search by Keyword</option>
+                <option value="6">Search by Publisher</option>
+                <option value="7">Search by Place</option>
+            </select>
+            <button type="submit" >Search</button>
+            {% comment %} {% endif %} {% endcomment %}
+        </form>
+    </div>
+    <h1>Sindhi Dataset</h1>
+
+    {% for row in data %}
+    <div style="display: flex;" >
+        <a href="{{row.id}}">
+            <img src="https://www.iiti.ac.in/public/themes/iitindore/demos/update-logo.png" width="200px">
+
+        </a>
+        <div>
+            <h3>{{ row.title }}</h3>
+            <p>{{ row.author_first_name }} &nbsp; {{ row.author_last_name }}</p>
+            <p>Published by {{ row.publisher }}</p>
+            <p>Place: {{ row.place }}</p>
+        </div>
+    </div>
+    <hr>
+    {% endfor %}
+</body>
+</html>

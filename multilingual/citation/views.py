@@ -2,52 +2,117 @@ from django.shortcuts import render
 from django.http import HttpResponse
 import openpyxl,os
 from django.conf import settings
+from .models import sindhi,northeast,malayalam
 
-# Create your views here.
+
+
 def home(request):
-    return HttpResponse("<a href='sindhi/'>Sindhi</a> <br> <a href='northeast/'>North East</a> <br> <a href='malayalam/'>Malayalam</a>")
+    return render(request,"citation/home.html")
 
-def library(request,lib):
-    # Assuming 'your_file.xlsx' is the name of your Excel file in the 'static' directory
-    excel_file_path = os.path.join(settings.BASE_DIR, f'citation/static/citation/{lib}.xlsx')
-
-    # Open the Excel file
-    workbook = openpyxl.load_workbook(excel_file_path)
-
-    # Assuming the data is in the first sheet (index 0)
-    sheet = workbook.worksheets[0]
-    headings = [cell.value for cell in sheet[1]]
-    data = []
-    flag=False
+def Sindhi(request):
+    obj=sindhi.objects.all()
+    context={"data":obj}
     if request.method=="POST":
-        flag=True
         searched=request.POST.get("search")
-        for row in sheet.iter_rows(min_row=2, values_only=True):
-            if searched in row[0]:
-                row_data = {
-                    'column1': row[0],
-                    'column2': row[1],
-                    'column3': row[2],
-                    'column4': row[3],
-                    'column5': row[4],
-                    'column6': row[5],
-                    'column7': row[6],
-                }
-                data.append(row_data)
-        # return render(request, 'citation/index.html',{'data':data, 'heads':headings})
-    else:
+        # searche=searched.upper()
 
-        for row in sheet.iter_rows(min_row=2, values_only=True):
-            # Assuming each row has data in all 6 columns
-            row_data = {
-                'column1': row[0],
-                'column2': row[1],
-                'column3': row[2],
-                'column4': row[3],
-                'column5': row[4],
-                'column6': row[5],
-                'column7': row[6],
-            }
-            data.append(row_data)
+        i=request.POST.get("type_of_search")
+        j=int(i)
+        if(j==1):
+            context['data']=sindhi.objects.filter(title__icontains=searched)
+        elif j==2:
+            context['data']=sindhi.objects.filter(accession_number__icontains=searched)
+        elif j==3:
+            context['data']=sindhi.objects.filter(author_first_name__icontains=searched)
+        elif j==4:
+            context['data']=sindhi.objects.filter(author_last_name__icontains=searched)
+        elif j==5:
+            context['data']=sindhi.objects.filter(keyword__icontains=searched)
+        elif j==6:
+            context['data']=sindhi.objects.filter(publisher__icontains=searched)
+        elif j==7:
+            context['data']=sindhi.objects.filter(place__icontains=searched)
+        return render(request,"citation/sindhi.html",context=context)
+        
+    return render(request,"citation/sindhi.html",context=context)
+def Northeast(request):
+    obj=northeast.objects.all()
+    context={
+        "data": obj
+    }
+    if request.method=="POST":
+        searched=request.POST.get("search")
+        # searche=searched.upper()
 
-    return render(request, 'citation/index.html',{'data':data, 'heads':headings, 'flag':flag, 'lib':lib})
+        i=request.POST.get("type_of_search")
+        j=int(i)
+        if(j==1):
+            context['data']=northeast.objects.filter(title__icontains=searched)
+        elif j==2:
+            context['data']=northeast.objects.filter(accession_number__icontains=searched)
+        elif j==3:
+            context['data']=northeast.objects.filter(class_number__icontains=searched)
+        elif j==4:
+            context['data']=northeast.objects.filter(author_name__icontains=searched)
+        elif j==5:
+            context['data']=northeast.objects.filter(year__icontains=searched)
+        elif j==6:
+            context['data']=northeast.objects.filter(publisher__icontains=searched)
+        elif j==7:
+            context['data']=northeast.objects.filter(collection__icontains=searched)
+        elif j==8:
+            context['data']=northeast.objects.filter(language__icontains=searched)
+        return render(request,"citation/northeast.html",context=context)
+    return render(request,"citation/northeast.html",context=context)
+def Malayalam(request):
+    obj=malayalam.objects.all()
+    context={
+        "data": obj
+    }
+    if request.method=="POST":
+        searched=request.POST.get("search")
+        # searche=searched.upper()
+
+        i=request.POST.get("type_of_search")
+        j=int(i)
+        if(j==1):
+            context['data']=malayalam.objects.filter(malayalam_title__icontains=searched)
+        elif j==2:
+            context['data']=malayalam.objects.filter(engish_title__icontains=searched)
+        elif j==3:
+            context['data']=malayalam.objects.filter(isbn_no__icontains=searched)
+        elif j==4:
+            context['data']=malayalam.objects.filter(author_name__icontains=searched)
+        elif j==5:
+            context['data']=malayalam.objects.filter(subject__icontains=searched)
+        elif j==6:
+            context['data']=malayalam.objects.filter(genre__icontains=searched)
+        elif j==7:
+            context['data']=malayalam.objects.filter(publisher__icontains=searched)
+        elif j==8:
+            context['data']=malayalam.objects.filter(year_of_dc__icontains=searched)
+        elif j==9:
+            context['data']=malayalam.objects.filter(year_of_pub__icontains=searched)
+        return render(request,"citation/malayalam.html",context=context)
+    return render(request,"citation/malayalam.html",context=context)
+
+def sindhidesc(request,id):
+    obj=sindhi.objects.filter(id=id)[0]
+    context={
+        'data':obj
+    }
+    return render(request,"citation/sindhidesc.html",context)
+
+def northeastdesc(request,id):
+    obj=northeast.objects.filter(id=id)[0]
+    context={
+        'data':obj
+    }
+    return render(request,"citation/northeastdesc.html",context)
+
+def malayalamdesc(request,id):
+    obj=malayalam.objects.filter(id=id)[0]
+    context={
+        'data':obj
+    }
+    return render(request,"citation/malayalamdesc.html",context)

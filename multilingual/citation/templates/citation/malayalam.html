@@ -1,0 +1,66 @@
+<!-- your_template.html -->
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Multilingual Database</title>
+    <style>
+        table {
+            border-collapse: collapse;
+            width: 100%;
+        }
+
+        th, td {
+            border: 1px solid #dddddd;
+            text-align: left;
+            padding: 8px;
+        }
+        .search{
+            display:flex;
+            align-items: center;
+            justify-content: center;
+        }
+    </style>
+</head>
+<body>
+    <div class="search" >
+        <form action="" method="POST">
+            {% csrf_token %}
+            <input type="text" id="search" name="search">
+            {% comment %} {% if flag %}
+            <a href="http://127.0.0.1:8000/{{lib}}/">Close</a>
+            {% else %} {% endcomment %}
+            <select name="type_of_search" id="filterDropdown">
+                <option value="1">Search by Malayalam Title</option>
+                <option value="2">Search by English Title</option>
+                <option value="3">Search by ISBN number</option>
+                <option value="4">Search by Author name</option>
+                <option value="5">Search by Subject</option>
+                <option value="6">Search by Genre</option>
+                <option value="7">Search by Publisher</option>
+                <option value="8">Search by Year of DC</option>
+                <option value="9">Search by Year of publication</option>
+            </select>
+            <button type="submit" >Search</button>
+            {% comment %} {% endif %} {% endcomment %}
+        </form>
+    </div>
+    <h1>Malayalam Dataset</h1>
+
+    {% for row in data %}
+    <div style="display: flex;" >
+        <a href="{{row.id}}">
+            <img src="https://www.iiti.ac.in/public/themes/iitindore/demos/update-logo.png" width="200px">
+
+        </a>
+        <div>
+            <h3>{{ row.malayalam_title }}</h3>
+            <h3>{{ row.english_title }}</h3>
+            <p>{{ row.author_name }}</p>
+            <p>Published by {{ row.publisher }}</p>
+            <p>Subject: {{ row.subject }}</p>
+        </div>
+    </div>
+    <hr>
+    {% endfor %}
+</body>
+</html>

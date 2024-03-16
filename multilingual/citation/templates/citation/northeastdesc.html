@@ -1,0 +1,45 @@
+<!-- your_template.html -->
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Multilingual Database</title>
+    <style>
+        table {
+            border-collapse: collapse;
+            width: 100%;
+        }
+
+        th, td {
+            border: 1px solid #dddddd;
+            text-align: left;
+            padding: 8px;
+        }
+        .search{
+            display:flex;
+            align-items: center;
+            justify-content: center;
+        }
+    </style>
+</head>
+<body>
+
+  
+
+    
+    <div style="display: flex;" >
+        <img src="https://www.iiti.ac.in/public/themes/iitindore/demos/update-logo.png" width="200px">
+        <div>
+            <h3>{{ data.title }}</h3>
+            <p>{{ data.author_name }}</p>
+            <p>Published by {{ data.publisher }}</p>
+            <p>Accession number {{ data.accession_number }}</p>
+            <p>Class number {{ data.class_number }}</p>
+            <p>Year {{ data.year }}</p>
+            <p>Collection: {{ data.collection }}</p>
+            <p>Language: {{ data.language }}</p>
+        </div>
+    </div>
+    <hr>
+
+</body>
+</html>
