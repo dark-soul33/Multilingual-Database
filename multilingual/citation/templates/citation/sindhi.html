@@ -1,172 +1,25 @@
 <!DOCTYPE html>
 <html lang="en">
-
 <head>
+  {% load static %}
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Data Structures and Algorithms on JSTOR</title>
-    <style>
-        /* Reset CSS */
-        :root{
-          --orange:#e67e22;
-          --black:#333;
-          --blue: #288ecd;
-          --light-color:#777;
-          --border:.1rem solid rgba(0,0,0,.2);
-          --box-shadow:0 .5rem 1rem rgba(0,0,0,.2);
-      }
-      
-      *{
-          margin:0; padding:0;
-          box-sizing: border-box;
-          outline: none; border:none;
-          text-decoration: none;
-          font-family: Verdana, Geneva, Tahoma, sans-serif;
-          font-weight: lighter;
-      }
-      
-      html{
-          font-size: 62.5%;
-          overflow-x: hidden;
-          scroll-behavior: smooth;
-          scroll-padding-top: 6rem;
-      }
-        body {
-            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-            background-color: #f4f4f4;
-            color: #333;
-            line-height: 1.6;
-            margin: 0;
-            padding: 0;
-        }
-
-        .header{
-          position: fixed;
-          top:0; left:0; right:0;
-          z-index: 1000;
-          background: #fff;
-          box-shadow: var(--box-shadow);
-          display: flex;
-          align-items: center;
-          padding:1.2rem 7%;
-      }
-      
-      .header .logo{
-          color:var(--blue);
-          font-size: 2.5rem;
-          margin-right: auto;
-      }
-      
-      .header .logo span{
-          color:var(--orange);
-      }
-      
-      .header .navbar a{
-          color:var(--light-color);
-          margin-right: 2rem;
-          font-size: 1.7rem;
-          text-transform: capitalize;
-      }
-      
-      .header .navbar a:hover{
-          color:var(--orange);
-      }
-
-        .container {
-            max-width: 1200px;
-            margin: 20px auto;
-            margin-top: 15vh;
-            padding: 20px;
-            background-color: #fff;
-            border-radius: 5px;
-            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
-        }
-
-        h1,
-        h2 {
-            text-align: center;
-            margin-bottom: 20px;
-            color: #007bff;
-        }
-
-        .book-info {
-            padding: 20px;
-            border-bottom: 1px solid #ccc;
-        }
-
-        .book-info p {
-            margin-bottom: 10px;
-        }
-
-        .abstract {
-            margin-bottom: 20px;
-            padding: 20px;
-            background-color: #f9f9f9;
-            border-left: 4px solid #007bff;
-        }
-
-        .abstract h2 {
-            margin-bottom: 10px;
-            color: #007bff;
-        }
-
-        .related-books {
-            padding: 20px;
-            border-top: 1px solid #ccc;
-        }
-
-        .related-books h3 {
-            margin-bottom: 10px;
-            color: #333;
-        }
-
-        .related-books ul {
-            list-style-type: none;
-            padding: 0;
-        }
-
-        .related-books li {
-            margin-bottom: 5px;
-            color: #666;
-        }
-
-        .btn-container {
-            display: flex;
-            justify-content: center;
-            margin-top: 20px;
-        }
-
-        .btn {
-            padding: 10px 20px;
-            border: none;
-            border-radius: 5px;
-            cursor: pointer;
-            color: #fff;
-            background-color: #007bff;
-            transition: background-color 0.3s ease;
-            text-transform: uppercase;
-            font-weight: bold;
-            letter-spacing: 1px;
-        }
-
-        .btn:hover {
-            background-color: #0056b3;
-        }
-
-        @media (max-width: 768px) {
-            .container {
-                padding: 10px;
-            }
-
-            .abstract {
-                padding: 10px;
-            }
-        }
-    </style>
+    <title>Search Page</title>
+     <!-- font awesome cdn link  -->
+    <link
+      rel="stylesheet"
+      href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css"
+    />
+    <link
+      rel="stylesheet"
+      href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.1.1/css/all.min.css"
+      integrity="sha512-KfkfwYDsLkIlwQp6LFnl8zNdLGxu9YAA1QvwINks4PhcElQSvqcyVLLD9aMhXd13uQjoXtEKNosOWaZqXgel0g=="
+      crossorigin="anonymous"
+      referrerpolicy="no-referrer"
+    />
+    <link rel="stylesheet" href="{% static "citation/style2.css" %}">
 </head>
-
 <body>
-<<<<<<< Updated upstream
     <header class="header">
         <a href="/" class="logo"><span>P</span>olyglot</a>
   
@@ -202,67 +55,105 @@
           <button type="submit" class="fas fa-search"></button>
         </form>
       </header>
-=======
-  <header class="header">
-    <a href="/" class="logo"><span>P</span>olyglot</a>
->>>>>>> Stashed changes
 
-    <nav class="navbar">
-      <a href="/">Home</a>
-    </nav>
+    <main>
+        <section class="container" id="posts">
+            <div class="list-container">
+            {% for row in data %}
+            
+            <div class="box">
+                <a href="/sindhi/{{row.id}}">
+                    <img src="{%static "citation/kship.jpg"%}" alt="Article 1">
+                    
+                    <div class="info">
+                        <h2>{{row.title}}</h2>
+                    </a>
+                    <p>Author: {{row.author_first_name}}&nbsp;{{row.author_last_name}}</p>
+                    <p>Accession Number: {{row.accession_number}}</p>
+                    <p>Publication: {{row.publisher}}</p>
+                </div>
+            </div>
+            
+            {% endfor %}
+            <!-- List of articles, journals, novels, etc. -->
 
-    <div class="icons">
-      <i class="fas fa-bars" id="menu-bars"></i>
-      <i class="fas fa-search" id="search-icon"></i>
-    </div>
-  </header>
-    <div class="container">
-        <h1>{{ data.title }}</h1>
-        <div class="book-info">
-            <p><strong>Author:</strong> {{ data.author_first_name }} &nbsp; {{ data.author_last_name }}</p>
-            <p><strong>Publication:</strong> {{ data.publisher }}</p>
-            <p><strong>Accession number</strong> {{ data.accession_number }}</p>
-            <p><strong>Keyword:</strong> {{ data.keyword }}</p>
-            <p><strong>Place:</strong> {{ data.place }}</p>
-            <p><strong>Open Access:</strong> No</p>
+            {% comment %} <div class="box">
+                <img src="{%static "citation/kship.jpg"%}" alt="Article 2">
+                <div class="info">
+                    <h2>Article 2 Title</h2>
+                    <p>Author: Author Name</p>
+                    <p>Accession Number: ACC002</p>
+                    <p>Publication: Publication Date</p>
+                </div>
+            </div>
+            <div class="box">
+                <img src="{%static "citation/kship.jpg"%}" alt="Article 2">
+                <div class="info">
+                    <h2>Article 2 Title</h2>
+                    <p>Author: Author Name</p>
+                    <p>Accession Number: ACC002</p>
+                    <p>Publication: Publication Date</p>
+                </div>
+            </div>
+            <div class="box">
+                <img src="{%static "citation/kship.jpg"%}" alt="Article 2">
+                <div class="info">
+                    <h2>Article 2 Title</h2>
+                    <p>Author: Author Name</p>
+                    <p>Accession Number: ACC002</p>
+                    <p>Publication: Publication Date</p>
+                </div>
+            </div>
+            <div class="box">
+                <img src="{%static "citation/kship.jpg"%}" alt="Article 2">
+                <div class="info">
+                    <h2>Article 2 Title</h2>
+                    <p>Author: Author Name</p>
+                    <p>Accession Number: ACC002</p>
+                    <p>Publication: Publication Date</p>
+                </div>
+            </div> {% endcomment %}
+            <!-- Add more articles as needed -->
+
         </div>
-        <div class="abstract">
-            <h2>Abstract</h2>
-            <p>
-                Not available for this article
-            </p>
+        <div class="sidebar">
+            <div class="filter" id="filter">
+              Filters
+              <i class="fa-solid fa-sort"></i>
+            </div>
+            <div class="box" id="categories">
+                <h3 class="title">categories</h3>
+                <div class="category">
+                  <a href="/sindhi" style="color: #e67e22;"> <b>Sindhi</b> <span>{{num0}}</span></a>
+                  <a href="/northeast"> North Eastern <span>{{num1}}</span> </a>
+                  <a href="/malayalam"> Malayalam <span>{{num2}}</span> </a>
+                  {% comment %} <a href="#"> books <span>17</span> </a>
+                  <a href="#"> manuscripts <span>48</span> </a>
+                  <a href="#"> poetry <span>12</span> </a>
+                  <a href="#"> biography <span>17</span> </a>
+                  <a href="#"> religion <span>31</span> </a>
+                  <a href="#"> lingustic <span>6</span> </a>
+                  <a href="#"> history <span>16</span> </a>
+                  <a href="#"> eassy <span>21</span> </a>
+                  <a href="#"> criticism <span>7</span> </a> {% endcomment %}
+                </div>
+              </div>
         </div>
-        <!-- <div class="related-books">
-            <h3>Related Books</h3>
-            <ul>
-                <li>Introduction to Algorithms by Thomas H. Cormen, Charles E. Leiserson, Ronald L. Rivest, and Clifford
-                    Stein</li>
-                <li>Algorithms by Robert Sedgewick and Kevin Wayne</li>
-                <li>Data Structures and Algorithm Analysis in Java by Mark Allen Weiss</li>
-            </ul>
-        </div> -->
-        <div class="btn-container">
-            <button class="btn" onclick="shareBook()">Share</button>
-                
-            <button class="btn" onclick="saveBook()">Save</button>
-               
-            <button class="btn" onclick="citeBook()">Cite</button>
+        </section>
+    </main>
+
+    <section class="footer">
+        <div class="follow">
+          <a href="#" class="fab fa-facebook-f"></a>
+          <a href="#" class="fab fa-twitter"></a>
+          <a href="#" class="fab fa-instagram"></a>
+          <a href="#" class="fab fa-linkedin"></a>
         </div>
-    </div>
-
-    <script>
-        function shareBook() {
-            alert('Share functionality is not implemented yet.');
-        }
-
-        function saveBook() {
-            alert('Save functionality is not implemented yet.');
-        }
-
-        function citeBook() {
-            alert('Cite functionality is not implemented yet.');
-        }
-    </script>
+  
+        <div class="credit">
+          The website is owned and operated by <span>IIT Indore</span> | all rights reserved
+        </div>
+    </section>
+    <script src="{%static "citation/script2.js"%}"></script>
 </body>
-
 </html>

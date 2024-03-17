@@ -25,11 +25,7 @@ def Sindhi(request):
         searched=request.POST.get("searched")
         print(searched)
         # searche=searched.upper()
-<<<<<<< Updated upstream
         context['data']=sindhi.objects.filter(title__icontains=searched)
-=======
-        # context['data']=sindhi.objects.filter(title__icontains=searched)
->>>>>>> Stashed changes
         i=request.POST.get("type_of_search")
         j=int(i)
         if(j==1):
@@ -65,11 +61,7 @@ def Northeast(request):
         print(searched)
         # searche=searched.upper()
 
-<<<<<<< Updated upstream
         context['data']=northeast.objects.filter(title__icontains=searched)
-=======
-        # context['data']=northeast.objects.filter(title__icontains=searched)
->>>>>>> Stashed changes
         i=request.POST.get("type_of_search")
         j=int(i)
         if(j==1):
@@ -104,11 +96,7 @@ def Malayalam(request):
         searched=request.POST.get("search")
         # searche=searched.upper()
 
-<<<<<<< Updated upstream
         context['data']=malayalam.objects.filter(malayalam_title__icontains=searched)
-=======
-        # context['data']=malayalam.objects.filter(malayalam_title__icontains=searched)
->>>>>>> Stashed changes
         i=request.POST.get("type_of_search")
         j=int(i)
         if(j==1):
