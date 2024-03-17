@@ -23,24 +23,25 @@ def Sindhi(request):
             }
     if request.method=="POST":
         searched=request.POST.get("searched")
+        print(searched)
         # searche=searched.upper()
         context['data']=sindhi.objects.filter(title__icontains=searched)
-        # i=request.POST.get("type_of_search")
-        # j=int(i)
-        # if(j==1):
-        #     context['data']=sindhi.objects.filter(title__icontains=searched)
-        # elif j==2:
-        #     context['data']=sindhi.objects.filter(accession_number__icontains=searched)
-        # elif j==3:
-        #     context['data']=sindhi.objects.filter(author_first_name__icontains=searched)
-        # elif j==4:
-        #     context['data']=sindhi.objects.filter(author_last_name__icontains=searched)
-        # elif j==5:
-        #     context['data']=sindhi.objects.filter(keyword__icontains=searched)
-        # elif j==6:
-        #     context['data']=sindhi.objects.filter(publisher__icontains=searched)
-        # elif j==7:
-        #     context['data']=sindhi.objects.filter(place__icontains=searched)
+        i=request.POST.get("type_of_search")
+        j=int(i)
+        if(j==1):
+            context['data']=sindhi.objects.filter(title__icontains=searched)
+        elif j==2:
+            context['data']=sindhi.objects.filter(accession_number__icontains=searched)
+        elif j==3:
+            context['data']=sindhi.objects.filter(author_first_name__icontains=searched)
+        elif j==4:
+            context['data']=sindhi.objects.filter(author_last_name__icontains=searched)
+        elif j==5:
+            context['data']=sindhi.objects.filter(keyword__icontains=searched)
+        elif j==6:
+            context['data']=sindhi.objects.filter(publisher__icontains=searched)
+        elif j==7:
+            context['data']=sindhi.objects.filter(place__icontains=searched)
         
         return render(request,"citation/sindhi.html",context=context)
         
@@ -57,27 +58,28 @@ def Northeast(request):
             }
     if request.method=="POST":
         searched=request.POST.get("search")
+        print(searched)
         # searche=searched.upper()
 
         context['data']=northeast.objects.filter(title__icontains=searched)
-        # i=request.POST.get("type_of_search")
-        # j=int(i)
-        # if(j==1):
-        #     context['data']=northeast.objects.filter(title__icontains=searched)
-        # elif j==2:
-        #     context['data']=northeast.objects.filter(accession_number__icontains=searched)
-        # elif j==3:
-        #     context['data']=northeast.objects.filter(class_number__icontains=searched)
-        # elif j==4:
-        #     context['data']=northeast.objects.filter(author_name__icontains=searched)
-        # elif j==5:
-        #     context['data']=northeast.objects.filter(year__icontains=searched)
-        # elif j==6:
-        #     context['data']=northeast.objects.filter(publisher__icontains=searched)
-        # elif j==7:
-        #     context['data']=northeast.objects.filter(collection__icontains=searched)
-        # elif j==8:
-        #     context['data']=northeast.objects.filter(language__icontains=searched)
+        i=request.POST.get("type_of_search")
+        j=int(i)
+        if(j==1):
+            context['data']=northeast.objects.filter(title__icontains=searched)
+        elif j==2:
+            context['data']=northeast.objects.filter(accession_number__icontains=searched)
+        elif j==3:
+            context['data']=northeast.objects.filter(class_number__icontains=searched)
+        elif j==4:
+            context['data']=northeast.objects.filter(author_name__icontains=searched)
+        elif j==5:
+            context['data']=northeast.objects.filter(year__icontains=searched)
+        elif j==6:
+            context['data']=northeast.objects.filter(publisher__icontains=searched)
+        elif j==7:
+            context['data']=northeast.objects.filter(collection__icontains=searched)
+        elif j==8:
+            context['data']=northeast.objects.filter(language__icontains=searched)
         return render(request,"citation/northeast.html",context=context)
     return render(request,"citation/northeast.html",context=context)
 def Malayalam(request):
@@ -95,26 +97,26 @@ def Malayalam(request):
         # searche=searched.upper()
 
         context['data']=malayalam.objects.filter(malayalam_title__icontains=searched)
-        # i=request.POST.get("type_of_search")
-        # j=int(i)
-        # if(j==1):
-        #     context['data']=malayalam.objects.filter(malayalam_title__icontains=searched)
-        # elif j==2:
-        #     context['data']=malayalam.objects.filter(engish_title__icontains=searched)
-        # elif j==3:
-        #     context['data']=malayalam.objects.filter(isbn_no__icontains=searched)
-        # elif j==4:
-        #     context['data']=malayalam.objects.filter(author_name__icontains=searched)
-        # elif j==5:
-        #     context['data']=malayalam.objects.filter(subject__icontains=searched)
-        # elif j==6:
-        #     context['data']=malayalam.objects.filter(genre__icontains=searched)
-        # elif j==7:
-        #     context['data']=malayalam.objects.filter(publisher__icontains=searched)
-        # elif j==8:
-        #     context['data']=malayalam.objects.filter(year_of_dc__icontains=searched)
-        # elif j==9:
-        #     context['data']=malayalam.objects.filter(year_of_pub__icontains=searched)
+        i=request.POST.get("type_of_search")
+        j=int(i)
+        if(j==1):
+            context['data']=malayalam.objects.filter(malayalam_title__icontains=searched)
+        elif j==2:
+            context['data']=malayalam.objects.filter(engish_title__icontains=searched)
+        elif j==3:
+            context['data']=malayalam.objects.filter(isbn_no__icontains=searched)
+        elif j==4:
+            context['data']=malayalam.objects.filter(author_name__icontains=searched)
+        elif j==5:
+            context['data']=malayalam.objects.filter(subject__icontains=searched)
+        elif j==6:
+            context['data']=malayalam.objects.filter(genre__icontains=searched)
+        elif j==7:
+            context['data']=malayalam.objects.filter(publisher__icontains=searched)
+        elif j==8:
+            context['data']=malayalam.objects.filter(year_of_dc__icontains=searched)
+        elif j==9:
+            context['data']=malayalam.objects.filter(year_of_pub__icontains=searched)
         return render(request,"citation/malayalam.html",context=context)
     return render(request,"citation/malayalam.html",context=context)
 

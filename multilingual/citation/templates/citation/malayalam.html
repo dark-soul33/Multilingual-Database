@@ -21,7 +21,7 @@
 </head>
 <body>
     <header class="header">
-        <a href="#" class="logo"><span>P</span>olyglot</a>
+        <a href="/" class="logo"><span>P</span>olyglot</a>
   
         <nav class="navbar">
           <a href="/">Home</a>
@@ -35,13 +35,25 @@
         </div>
   
         <form action="" class="search-form">
+          <label for="type_of_search">Search with</label>
+            <select id="type_of_search" name="type_of_search">
+            <option value="1">malayalam_title</option>
+            <option value="2">engish_title</option>
+            <option value="3">isbn_no</option>
+            <option value="4">author_name</option>
+            <option value="5">subject</option>
+            <option value="6">genre</option>
+            <option value="7">publisher</option>
+            <option value="8">year_of_dc</option>
+            <option value="9">year_of_pub</option>
+          </select>
           <input
             type="search"
             name=""
             placeholder="search here..."
             id="search-box"
           />
-          <label for="search-box" class="fas fa-search"></label>
+          <button type="submit" class="fas fa-search"></button>
         </form>
       </header>
 

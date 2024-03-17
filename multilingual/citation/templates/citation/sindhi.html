@@ -21,7 +21,7 @@
 </head>
 <body>
     <header class="header">
-        <a href="#" class="logo"><span>P</span>olyglot</a>
+        <a href="/" class="logo"><span>P</span>olyglot</a>
   
         <nav class="navbar">
           <a href="/">Home</a>
@@ -36,13 +36,23 @@
   
         <form method="post" action="" class="search-form">
             {% csrf_token %}
+          <label for="type_of_search">Search with</label>
+          <select id="type_of_search" name="type_of_search">
+            <option value="1">Title</option>
+            <option value="2">Accession-number</option>
+            <option value="3">Author firstname</option>
+            <option value="4">Author lastname</option>
+            <option value="5">Keyword</option>
+            <option value="6">Publishers</option>
+            <option value="7">Place</option>
+          </select>
           <input
             type="search"
             name="searched"
             placeholder="search here..."
             id="search-box"
           />
-          <label for="search-box" class="fas fa-search"></label>
+          <button type="submit" class="fas fa-search"></button>
         </form>
       </header>
 
