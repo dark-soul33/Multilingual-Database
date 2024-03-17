@@ -51,9 +51,12 @@
             {% for row in data %}
             
             <div class="box">
-                <img src="{%static "citation/kship.jpg"%}" alt="Article 1">
-                <div class="info">
-                    <h2>{{row.english_title}}</h2>
+                <a href="/malayalam/{{row.id}}">
+
+                    <img src="{%static "citation/kship.jpg"%}" alt="Article 1">
+                    <div class="info">
+                        <h2>{{row.english_title}}</h2>
+                    </a>
                     <h2>{{row.malayalam_title}}</h2>
                     <p>Author: {{row.author_name}}</p>
                     <p>ISBN Number: {{row.isbn_no}}</p>
