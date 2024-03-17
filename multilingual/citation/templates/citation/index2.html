@@ -34,11 +34,10 @@
           <i class="fas fa-search" id="search-icon"></i>
         </div>
   
-        <form method="post" action="" class="search-form">
-            {% csrf_token %}
+        <form action="" class="search-form">
           <input
             type="search"
-            name="searched"
+            name=""
             placeholder="search here..."
             id="search-box"
           />
@@ -48,31 +47,18 @@
 
     <main>
         <section class="container" id="posts">
-            <div class="list-container">
-            {% for row in data %}
-            
-            <div class="box">
-                <img src="{%static "citation/kship.jpg"%}" alt="Article 1">
-                <div class="info">
-                    <h2>{{row.title}}</h2>
-                    <p>Author: {{row.author_first_name}}&nbsp;{{row.author_last_name}}</p>
-                    <p>Accession Number: {{row.accession_number}}</p>
-                    <p>Publication: {{row.publisher}}</p>
-                </div>
-            </div>
-            
-            {% endfor %}
+        <div class="list-container">
             <!-- List of articles, journals, novels, etc. -->
+            <div class="box">
+                <img src="{%static "citation/istockphoto-1437997089-612x612.jpg"%}" alt="Article 1">
+                <div class="info">
+                    <h2>Article 1 Title</h2>
+                    <p>Author: Author Name</p>
+                    <p>Accession Number: ACC001</p>
+                    <p>Publication: Publication Date</p>
+                </div>
+            </div>
 
-            {% comment %} <div class="box">
-                <img src="{%static "citation/kship.jpg"%}" alt="Article 2">
-                <div class="info">
-                    <h2>Article 2 Title</h2>
-                    <p>Author: Author Name</p>
-                    <p>Accession Number: ACC002</p>
-                    <p>Publication: Publication Date</p>
-                </div>
-            </div>
             <div class="box">
                 <img src="{%static "citation/kship.jpg"%}" alt="Article 2">
                 <div class="info">
@@ -99,7 +85,16 @@
                     <p>Accession Number: ACC002</p>
                     <p>Publication: Publication Date</p>
                 </div>
-            </div> {% endcomment %}
+            </div>
+            <div class="box">
+                <img src="{%static "citation/kship.jpg"%}" alt="Article 2">
+                <div class="info">
+                    <h2>Article 2 Title</h2>
+                    <p>Author: Author Name</p>
+                    <p>Accession Number: ACC002</p>
+                    <p>Publication: Publication Date</p>
+                </div>
+            </div>
             <!-- Add more articles as needed -->
 
         </div>
@@ -111,10 +106,10 @@
             <div class="box" id="categories">
                 <h3 class="title">categories</h3>
                 <div class="category">
-                  <a href="/sindhi" style="color: #e67e22;"> <b>Sindhi</b> <span>{{num0}}</span></a>
-                  <a href="/northeast"> North Eastern <span>{{num1}}</span> </a>
-                  <a href="/malayalam"> Malayalam <span>{{num2}}</span> </a>
-                  {% comment %} <a href="#"> books <span>17</span> </a>
+                  <a href="#"> journals <span>42</span></a>
+                  <a href="#"> articles <span>75</span> </a>
+                  <a href="#"> novels <span>22</span> </a>
+                  <a href="#"> books <span>17</span> </a>
                   <a href="#"> manuscripts <span>48</span> </a>
                   <a href="#"> poetry <span>12</span> </a>
                   <a href="#"> biography <span>17</span> </a>
@@ -122,7 +117,7 @@
                   <a href="#"> lingustic <span>6</span> </a>
                   <a href="#"> history <span>16</span> </a>
                   <a href="#"> eassy <span>21</span> </a>
-                  <a href="#"> criticism <span>7</span> </a> {% endcomment %}
+                  <a href="#"> criticism <span>7</span> </a>
                 </div>
               </div>
         </div>

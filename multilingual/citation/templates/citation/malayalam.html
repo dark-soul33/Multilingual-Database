@@ -1,66 +1,146 @@
-<!-- your_template.html -->
 <!DOCTYPE html>
-<html>
+<html lang="en">
 <head>
-    <title>Multilingual Database</title>
-    <style>
-        table {
-            border-collapse: collapse;
-            width: 100%;
-        }
-
-        th, td {
-            border: 1px solid #dddddd;
-            text-align: left;
-            padding: 8px;
-        }
-        .search{
-            display:flex;
-            align-items: center;
-            justify-content: center;
-        }
-    </style>
+  {% load static %}
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Search Page</title>
+     <!-- font awesome cdn link  -->
+    <link
+      rel="stylesheet"
+      href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css"
+    />
+    <link
+      rel="stylesheet"
+      href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.1.1/css/all.min.css"
+      integrity="sha512-KfkfwYDsLkIlwQp6LFnl8zNdLGxu9YAA1QvwINks4PhcElQSvqcyVLLD9aMhXd13uQjoXtEKNosOWaZqXgel0g=="
+      crossorigin="anonymous"
+      referrerpolicy="no-referrer"
+    />
+    <link rel="stylesheet" href="{% static "citation/style2.css" %}">
 </head>
 <body>
-    <div class="search" >
-        <form action="" method="POST">
-            {% csrf_token %}
-            <input type="text" id="search" name="search">
-            {% comment %} {% if flag %}
-            <a href="http://127.0.0.1:8000/{{lib}}/">Close</a>
-            {% else %} {% endcomment %}
-            <select name="type_of_search" id="filterDropdown">
-                <option value="1">Search by Malayalam Title</option>
-                <option value="2">Search by English Title</option>
-                <option value="3">Search by ISBN number</option>
-                <option value="4">Search by Author name</option>
-                <option value="5">Search by Subject</option>
-                <option value="6">Search by Genre</option>
-                <option value="7">Search by Publisher</option>
-                <option value="8">Search by Year of DC</option>
-                <option value="9">Search by Year of publication</option>
-            </select>
-            <button type="submit" >Search</button>
-            {% comment %} {% endif %} {% endcomment %}
-        </form>
-    </div>
-    <h1>Malayalam Dataset</h1>
-
-    {% for row in data %}
-    <div style="display: flex;" >
-        <a href="{{row.id}}">
-            <img src="https://www.iiti.ac.in/public/themes/iitindore/demos/update-logo.png" width="200px">
-
-        </a>
-        <div>
-            <h3>{{ row.malayalam_title }}</h3>
-            <h3>{{ row.english_title }}</h3>
-            <p>{{ row.author_name }}</p>
-            <p>Published by {{ row.publisher }}</p>
-            <p>Subject: {{ row.subject }}</p>
+    <header class="header">
+        <a href="#" class="logo"><span>P</span>olyglot</a>
+  
+        <nav class="navbar">
+          <a href="/">Home</a>
+          {% comment %} <a href="demo.html#posts">about us</a>
+          <a href="demo.html#contact">contact us</a> {% endcomment %}
+        </nav>
+  
+        <div class="icons">
+          <i class="fas fa-bars" id="menu-bars"></i>
+          <i class="fas fa-search" id="search-icon"></i>
         </div>
-    </div>
-    <hr>
-    {% endfor %}
+  
+        <form action="" class="search-form">
+          <input
+            type="search"
+            name=""
+            placeholder="search here..."
+            id="search-box"
+          />
+          <label for="search-box" class="fas fa-search"></label>
+        </form>
+      </header>
+
+    <main>
+        <section class="container" id="posts">
+            <div class="list-container">
+            {% for row in data %}
+            
+            <div class="box">
+                <img src="{%static "citation/kship.jpg"%}" alt="Article 1">
+                <div class="info">
+                    <h2>{{row.english_title}}</h2>
+                    <h2>{{row.malayalam_title}}</h2>
+                    <p>Author: {{row.author_name}}</p>
+                    <p>ISBN Number: {{row.isbn_no}}</p>
+                    <p>Publication: {{row.publisher}}</p>
+                </div>
+            </div>
+            
+            {% endfor %}
+            <!-- List of articles, journals, novels, etc. -->
+
+            {% comment %} <div class="box">
+                <img src="{%static "citation/kship.jpg"%}" alt="Article 2">
+                <div class="info">
+                    <h2>Article 2 Title</h2>
+                    <p>Author: Author Name</p>
+                    <p>Accession Number: ACC002</p>
+                    <p>Publication: Publication Date</p>
+                </div>
+            </div>
+            <div class="box">
+                <img src="{%static "citation/kship.jpg"%}" alt="Article 2">
+                <div class="info">
+                    <h2>Article 2 Title</h2>
+                    <p>Author: Author Name</p>
+                    <p>Accession Number: ACC002</p>
+                    <p>Publication: Publication Date</p>
+                </div>
+            </div>
+            <div class="box">
+                <img src="{%static "citation/kship.jpg"%}" alt="Article 2">
+                <div class="info">
+                    <h2>Article 2 Title</h2>
+                    <p>Author: Author Name</p>
+                    <p>Accession Number: ACC002</p>
+                    <p>Publication: Publication Date</p>
+                </div>
+            </div>
+            <div class="box">
+                <img src="{%static "citation/kship.jpg"%}" alt="Article 2">
+                <div class="info">
+                    <h2>Article 2 Title</h2>
+                    <p>Author: Author Name</p>
+                    <p>Accession Number: ACC002</p>
+                    <p>Publication: Publication Date</p>
+                </div>
+            </div> {% endcomment %}
+            <!-- Add more articles as needed -->
+
+        </div>
+        <div class="sidebar">
+            <div class="filter" id="filter">
+              Filters
+              <i class="fa-solid fa-sort"></i>
+            </div>
+            <div class="box" id="categories">
+                <h3 class="title">categories</h3>
+                <div class="category">
+                  <a href="/sindhi"> <b>Sindhi</b> <span>{{num0}}</span></a>
+                  <a href="/northeast"> North Eastern <span>{{num1}}</span> </a>
+                  <a href="/malayalam" style="color: #e67e22;"> Malayalam <span>{{num2}}</span> </a>
+                  {% comment %} <a href="#"> books <span>17</span> </a>
+                  <a href="#"> manuscripts <span>48</span> </a>
+                  <a href="#"> poetry <span>12</span> </a>
+                  <a href="#"> biography <span>17</span> </a>
+                  <a href="#"> religion <span>31</span> </a>
+                  <a href="#"> lingustic <span>6</span> </a>
+                  <a href="#"> history <span>16</span> </a>
+                  <a href="#"> eassy <span>21</span> </a>
+                  <a href="#"> criticism <span>7</span> </a> {% endcomment %}
+                </div>
+              </div>
+        </div>
+        </section>
+    </main>
+
+    <section class="footer">
+        <div class="follow">
+          <a href="#" class="fab fa-facebook-f"></a>
+          <a href="#" class="fab fa-twitter"></a>
+          <a href="#" class="fab fa-instagram"></a>
+          <a href="#" class="fab fa-linkedin"></a>
+        </div>
+  
+        <div class="credit">
+          The website is owned and operated by <span>IIT Indore</span> | all rights reserved
+        </div>
+    </section>
+    <script src="{%static "citation/script2.js"%}"></script>
 </body>
 </html>
