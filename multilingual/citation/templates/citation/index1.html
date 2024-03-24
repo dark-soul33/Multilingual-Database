@@ -181,18 +181,19 @@
     <!-- contact section starts  -->
 
     <section class="contact" id="contact">
-      <form action="">
+      <form action="" method="post">
+        {% csrf_token %}
         <h3>contact us</h3>
         <div class="inputBox">
-          <input type="text" placeholder="name" />
-          <input type="email" placeholder="email" />
+          <input type="text" placeholder="name" name="name" />
+          <input type="email" placeholder="email" name="email" />
         </div>
         <div class="inputBox">
-          <input type="number" placeholder="number" />
-          <input type="text" placeholder="subject" />
+          <input type="number" placeholder="number" name="number"/>
+          <input type="text" placeholder="subject" name="subject" />
         </div>
         <textarea
-          name=""
+          name="text"
           placeholder="message"
           id=""
           cols="30"

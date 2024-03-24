@@ -33,6 +33,21 @@ class malayalam(models.Model):
     year_pub=models.CharField(max_length=255)
     other_pub=models.CharField(max_length=255)
 
+class contact(models.Model):
+    name=models.CharField(max_length=255)
+    number=models.CharField(max_length=12)
+    email=models.CharField(max_length=255)
+    subject=models.TextField()
+    text=models.TextField()
 
+class language(models.Model):
+    name=models.CharField(max_length=255)
 
-
+class literary_work(models.Model):
+    name=models.CharField(max_length=255)
+    isbn_no=models.CharField(max_length=25)
+    author_name=models.CharField(max_length=255)
+    publisher=models.CharField(max_length=255)
+    publish_year=models.CharField(max_length=255)
+    others=models.TextField()
+    lang=models.ForeignKey(language,on_delete=models.CASCADE)

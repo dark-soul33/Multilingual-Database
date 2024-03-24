@@ -2,14 +2,33 @@ from django.shortcuts import render
 from django.http import HttpResponse
 import openpyxl,os
 from django.conf import settings
-from .models import sindhi,northeast,malayalam
-
+from .models import sindhi,northeast,malayalam,contact
+from django.contrib.auth.models import User
+from django.contrib.auth import login,logout,authenticate
 
 
 def home(request):
+    if request.method=="POST":
+        name=request.POST.get('name')
+        number=request.POST.get('number')
+        email=request.POST.get('email')
+        subject=request.POST.get('subject')
+        text=request.POST.get('text')
+        mssg=contact.objects.create(name=name,number=number,email=email,subject=subject,text=text)
+        mssg.save()
     return render(request,"citation/index1.html")
 def index2(request):
     return render(request,"citation/index2.html")
+
+def admin_page(request):
+    if request.method=="POST":
+        user=request.POST.get("username")
+        password=request.POST.get("password")
+        user=authenticate(request,username=user,password=password)
+        if user is not None:
+            login(request,user)
+            return render(request,"citation/index.html")
+    return render(request,"citation/admin_page.html")
 
 def Sindhi(request):
     obj=sindhi.objects.all()
