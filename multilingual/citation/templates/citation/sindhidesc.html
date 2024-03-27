@@ -179,13 +179,15 @@
     </div>
   </header>
     <div class="container">
-        <h1>{{ data.title }}</h1>
+        <h1>{{ data.name }}</h1>
         <div class="book-info">
-            <p><strong>Author:</strong> {{ data.author_first_name }} &nbsp; {{ data.author_last_name }}</p>
+            <p><strong>Author:</strong> {{ data.author_name }}</p>
             <p><strong>Publication:</strong> {{ data.publisher }}</p>
-            <p><strong>Accession number</strong> {{ data.accession_number }}</p>
-            <p><strong>Keyword:</strong> {{ data.keyword }}</p>
-            <p><strong>Place:</strong> {{ data.place }}</p>
+            <p><strong>Accession number</strong> {{ data.isbn_no }}</p>
+            {% for da in list %}
+                <p>{{da}}</p>
+
+            {% endfor %}
             <p><strong>Open Access:</strong> No</p>
         </div>
         <div class="abstract">

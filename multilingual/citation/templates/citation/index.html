@@ -22,39 +22,67 @@
     </style>
 </head>
 <body>
-    <div class="search" >
-        <form action="" method="POST">
-            {% csrf_token %}
-            <input type="text" id="search" name="search">
-            {% if flag %}
-            <a href="http://127.0.0.1:8000/{{lib}}/">Close</a>
-            {% else %}
-            <select name="type_of_search" id="filterDropdown">
-                <option value="1">Search by Title</option>
-                <option value="2">Search by Accession number</option>
-                <option value="3">Search by Author last name</option>
-                <option value="4">Search by Author first name</option>
-                <option value="5">Search by Keyword</option>
-                <option value="6">Search by Publisher</option>
-                <option value="7">Search by Place</option>
-            </select>
-            <button type="submit" >Search</button>
-            {% endif %}
-        </form>
-    </div>
-    <h1>{{lib|capfirst}} Dataset</h1>
-
-    {% for row in data %}
-    <div style="display: flex;" >
-        <img src="https://www.iiti.ac.in/public/themes/iitindore/demos/update-logo.png" width="200px">
+    <form method="post" enctype="multipart/form-data">
+        {% csrf_token %}
+        <h3>Add Data via Excel Sheet</h3>
+        <input type="file" name="excel_sheet" accept=".xlsx, .xls">
         <div>
-            <h3>{{ row.column1 }}</h3>
-            <p>{{ row.column3 }} &nbsp; {{ row.column4 }}</p>
-            <p>Published by {{ row.column6 }}</p>
-            <p>Place: {{ row.column7 }}</p>
+            <label for="name">Name of new data set</label>
+            <input type="text" id="name" name="newlang" required>
         </div>
-    </div>
-    <hr>
-    {% endfor %}
+        <div>
+            <label for="title">Column no. of Title:</label>
+            <input type="number" id="title" name="title" required>
+        </div>
+        <div>
+            <label for="author">Column no. of Author Name:</label>
+            <input type="number" id="author" name="author" required>
+        </div>
+        <div>
+            <label for="isbn">Column no. of ISBN Number:</label>
+            <input type="number" id="isbn" name="isbn" required>
+        </div>
+        <div>
+            <label for="publisher">Column no. of Publisher:</label>
+            <input type="number" id="publisher" name="publisher" required>
+        </div>
+        <div>
+            <label for="language">Column no. of Language:</label>
+            <input type="number" id="language" name="language" required>
+        </div>
+        <button type="submit">Upload</button>
+    </form>
+    <form method="post" enctype="multipart/form-data">
+        {% csrf_token %}
+        <h3>Add Data via Excel Sheet</h3>
+        <input type="file" name="excel_sheet" accept=".xlsx, .xls">
+        <select id="lang" name="lang">
+            <option value="volvo">Volvo</option>
+            <option value="saab">Saab</option>
+            <option value="mercedes">Mercedes</option>
+            <option value="audi">Audi</option>
+        </select>
+        <div>
+            <label for="title">Column no. of Title:</label>
+            <input type="number" id="title" name="title" required>
+        </div>
+        <div>
+            <label for="author">Column no. of Author Name:</label>
+            <input type="number" id="author" name="author" required>
+        </div>
+        <div>
+            <label for="isbn">Column no. of ISBN Number:</label>
+            <input type="number" id="isbn" name="isbn" required>
+        </div>
+        <div>
+            <label for="publisher">Column no. of Publisher:</label>
+            <input type="number" id="publisher" name="publisher" required>
+        </div>
+        <div>
+            <label for="language">Column no. of Language:</label>
+            <input type="number" id="language" name="language" required>
+        </div>
+        <button type="submit">Upload</button>
+    </form>
 </body>
 </html>

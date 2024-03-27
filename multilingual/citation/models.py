@@ -48,6 +48,6 @@ class literary_work(models.Model):
     isbn_no=models.CharField(max_length=25)
     author_name=models.CharField(max_length=255)
     publisher=models.CharField(max_length=255)
-    publish_year=models.CharField(max_length=255)
+    language1=models.CharField(max_length=255)
     others=models.TextField()
     lang=models.ForeignKey(language,on_delete=models.CASCADE)

@@ -1,11 +1,25 @@
-from django.shortcuts import render
+from django.shortcuts import render,redirect
 from django.http import HttpResponse
-import openpyxl,os
+import os
+import openpyxl
 from django.conf import settings
-from .models import sindhi,northeast,malayalam,contact
+from .models import sindhi,northeast,malayalam,contact,language,literary_work
 from django.contrib.auth.models import User
 from django.contrib.auth import login,logout,authenticate
 
+# sindhis=sindhi.objects.all()
+# # print(type(sindhis.author_first_name))
+# for obj in sindhis:
+#     isbn=obj.accession_number
+#     name=obj.title
+#     auth=(obj.author_first_name )+(obj.author_last_name)
+#     lan='Sindhi'
+#     pub=obj.publisher
+#     oth='Keyword: '+(obj.keyword)+'#Place: '+(obj.place)
+#     lang=language.objects.filter(name='Sindhi')[0]
+#     lit=literary_work.objects.create(name=name,isbn_no=isbn,author_name=auth,publisher=pub,language1=lan,others=oth,lang=lang)
+#     lit.save()
+#     print(1)
 
 def home(request):
     if request.method=="POST":
@@ -27,12 +41,82 @@ def admin_page(request):
         user=authenticate(request,username=user,password=password)
         if user is not None:
             login(request,user)
-            return render(request,"citation/index.html")
+            return redirect('index')
     return render(request,"citation/admin_page.html")
 
+def index(request):
+    context={
+        'mssg':contact.objects.all(),
+        'lang':language.objects.all()
+    }
+    if request.method=='POST':
+        if 'newlang' in request.POST:
+            file=request.FILES['excel_sheet']
+            newlang=request.POST.get('newlang')
+            title=int(request.POST.get('title'))
+            author=int(request.POST.get('author'))
+            isbn=int(request.POST.get('isbn'))
+            publisher=int(request.POST.get('publisher'))
+            langua=int(request.POST.get('language'))
+            lan=language.objects.create(name=newlang)
+            lan.save()
+            nums=[title,author,isbn,publisher,langua]
+            workbook = openpyxl.load_workbook(file)
+            sheet = workbook.worksheets[0]
+            headings = [str(cell.value) for cell in sheet[1]]
+            col=sheet.max_column
+            for row in sheet.iter_rows(min_row=2,values_only=True):
+                t=str(row[title-1])
+                a=str(row[author-1])
+                s=str(row[isbn-1])
+                p=str(row[publisher-1])
+                if(langua==0):
+                    l=newlang
+                else:
+                    l=str(row[langua-1])
+                o=''
+                for i in range(1,col+1):
+                    if i not in nums:
+                        o+=headings[i-1]+': '+str(row[i-1])+'#'
+                lit=literary_work.objects.create(name=t,author_name=a,isbn_no=s,publisher=p,language1=l,others=o,lang=lan)
+                lit.save()
+        else:
+            file=request.FILES['excel_sheet']
+            lang=request.POST.get('lang')
+            title=int(request.POST.get('title'))
+            author=int(request.POST.get('author'))
+            isbn=int(request.POST.get('isbn'))
+            publisher=int(request.POST.get('publisher'))
+            langua=int(request.POST.get('language'))
+            lan=language.objects.filter(name=lang)[0]
+            nums=[title,author,isbn,publisher,langua]
+            workbook = openpyxl.load_workbook(file)
+            sheet = workbook.worksheets[0]
+            headings = [str(cell.value) for cell in sheet[1]]
+            col=sheet.max_column
+            for row in sheet.iter_rows(min_row=2,values_only=True):
+                t=str(row[title-1])
+                a=str(row[author-1])
+                s=str(row[isbn-1])
+                p=str(row[publisher-1])
+                if(langua==0):
+                    l=newlang
+                else:
+                    l=str(row[langua-1])
+                o=''
+                for i in range(1,col+1):
+                    if i not in nums:
+                        o+=headings[i-1]+': '+str(row[i-1])+'#'
+                lit=literary_work.objects.create(name=t,author_name=a,isbn_no=s,publisher=p,language1=l,others=o,lang=lan)
+                lit.save()
+
+    return render(request,"citation/index.html",context=context)
+
 def Sindhi(request):
-    obj=sindhi.objects.all()
-    obj1=northeast.objects.all()
+    lang=language.objects.filter(name='Sindhi')[0]
+    lang1=language.objects.filter(name='NorthEast')[0]
+    obj=literary_work.objects.filter(lang=lang)
+    obj1=literary_work.objects.filter(lang=lang1)
     obj2=malayalam.objects.all()
     lis=[len(obj),len(obj1),len(obj2)]
     context={"data":obj,
@@ -40,29 +124,29 @@ def Sindhi(request):
              "num1":lis[1],
              "num2":lis[2]
             }
-    if request.method=="POST":
-        searched=request.POST.get("searched")
-        print(searched)
-        # searche=searched.upper()
-        context['data']=sindhi.objects.filter(title__icontains=searched)
-        i=request.POST.get("type_of_search")
-        j=int(i)
-        if(j==1):
-            context['data']=sindhi.objects.filter(title__icontains=searched)
-        elif j==2:
-            context['data']=sindhi.objects.filter(accession_number__icontains=searched)
-        elif j==3:
-            context['data']=sindhi.objects.filter(author_first_name__icontains=searched)
-        elif j==4:
-            context['data']=sindhi.objects.filter(author_last_name__icontains=searched)
-        elif j==5:
-            context['data']=sindhi.objects.filter(keyword__icontains=searched)
-        elif j==6:
-            context['data']=sindhi.objects.filter(publisher__icontains=searched)
-        elif j==7:
-            context['data']=sindhi.objects.filter(place__icontains=searched)
+    # if request.method=="POST":
+    #     searched=request.POST.get("searched")
+    #     print(searched)
+    #     # searche=searched.upper()
+    #     context['data']=sindhi.objects.filter(title__icontains=searched)
+    #     i=request.POST.get("type_of_search")
+    #     j=int(i)
+    #     if(j==1):
+    #         context['data']=sindhi.objects.filter(title__icontains=searched)
+    #     elif j==2:
+    #         context['data']=sindhi.objects.filter(accession_number__icontains=searched)
+    #     elif j==3:
+    #         context['data']=sindhi.objects.filter(author_first_name__icontains=searched)
+    #     elif j==4:
+    #         context['data']=sindhi.objects.filter(author_last_name__icontains=searched)
+    #     elif j==5:
+    #         context['data']=sindhi.objects.filter(keyword__icontains=searched)
+    #     elif j==6:
+    #         context['data']=sindhi.objects.filter(publisher__icontains=searched)
+    #     elif j==7:
+    #         context['data']=sindhi.objects.filter(place__icontains=searched)
         
-        return render(request,"citation/sindhi.html",context=context)
+        # return render(request,"citation/sindhi.html",context=context)
         
     return render(request,"citation/sindhi.html",context=context)
 def Northeast(request):
@@ -140,14 +224,18 @@ def Malayalam(request):
     return render(request,"citation/malayalam.html",context=context)
 
 def sindhidesc(request,id):
-    obj=sindhi.objects.filter(id=id)[0]
+    obj=literary_work.objects.filter(id=id)[0]
+    st=obj.others
+    lis=st.split('#')
     context={
-        'data':obj
+        'data':obj,
+        'list':lis
     }
     return render(request,"citation/sindhidesc.html",context)
 
 def northeastdesc(request,id):
     obj=northeast.objects.filter(id=id)[0]
+    
     context={
         'data':obj
     }
