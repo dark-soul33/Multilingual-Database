@@ -31,6 +31,7 @@ def home(request):
         mssg=contact.objects.create(name=name,number=number,email=email,subject=subject,text=text)
         mssg.save()
     return render(request,"citation/index1.html")
+
 def index2(request):
     return render(request,"citation/index2.html")
 
@@ -111,6 +112,15 @@ def index(request):
                 lit.save()
 
     return render(request,"citation/index.html",context=context)
+
+def contacts(request):
+    context={'mssg':contact.objects.all()}
+    return render(request,'citation/cont.html',context)
+
+def delcont(request,id):
+    cont=contact.objects.filter(id=id)[0]
+    cont.delete()
+    return redirect('contacts')
 
 def Sindhi(request):
     lang=language.objects.filter(name='Sindhi')[0]
@@ -247,3 +257,21 @@ def malayalamdesc(request,id):
         'data':obj
     }
     return render(request,"citation/malayalamdesc.html",context)
+
+def main_page(request):
+    lang=language.objects.all()
+    lan=language.objects.filter(name='Sindhi')[0]
+    for i in lang:
+        i.num=i.literary_work_set.count()
+    data=literary_work.objects.filter(lang=lan)
+    return render(request,'citation/sindhi.html',context={'lang':lang,'data':data})
+
+def main_page_id(request,id):
+    lang=language.objects.all()
+    lan=language.objects.filter(id=id)[0]
+    for i in lang:
+        i.num=i.literary_work_set.count()
+    data=literary_work.objects.filter(lang=lan)
+    return render(request,'citation/sindhi.html',context={'lang':lang,'data':data})    
+
+

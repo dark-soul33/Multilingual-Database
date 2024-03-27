@@ -1,0 +1,30 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Contact List</title>
+</head>
+<body>
+
+<h1>Contact List</h1>
+
+{% if mssg %}
+  <ul>
+    {% for contact in mssg %}
+      <li>
+        <strong>Email:</strong> {{ contact.email }}<br>
+        <strong>Number:</strong> {{ contact.number }}<br>
+        <strong>Name:</strong> {{ contact.name }}<br>
+        <strong>Subject:</strong> {{ contact.subject }}<br>
+        <strong>Text:</strong> {{ contact.text }}
+      </li>
+      <a href="/admin1/del_contacts/{{contact.id}}" class="button">Contacts</a>
+    {% endfor %}
+  </ul>
+{% else %}
+  <p>No contacts available.</p>
+{% endif %}
+
+</body>
+</html>
