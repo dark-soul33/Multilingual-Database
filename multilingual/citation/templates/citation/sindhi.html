@@ -36,7 +36,7 @@
   
         <form method="post" action="" class="search-form">
             {% csrf_token %}
-          <label for="type_of_search">Search with</label>
+          {% comment %} <label for="type_of_search">Search with</label>
           <select id="type_of_search" name="type_of_search">
             <option value="1">Title</option>
             <option value="2">Accession-number</option>
@@ -45,11 +45,11 @@
             <option value="5">Keyword</option>
             <option value="6">Publishers</option>
             <option value="7">Place</option>
-          </select>
+          </select> {% endcomment %}
           <input
             type="search"
             name="searched"
-            placeholder="search here..."
+            placeholder="search here using Title, ISBN, Author, Publication..."
             id="search-box"
           />
           <button type="submit" class="fas fa-search"></button>

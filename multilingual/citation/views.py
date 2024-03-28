@@ -263,7 +263,17 @@ def main_page(request):
     lan=language.objects.filter(name='Sindhi')[0]
     for i in lang:
         i.num=i.literary_work_set.count()
-    data=literary_work.objects.filter(lang=lan)
+    if request.method=='POST':
+        search=request.POST.get('searched')
+        d1=literary_work.objects.filter(lang=lan,name__icontains=search)
+        d2=literary_work.objects.filter(lang=lan,isbn_no__icontains=search)
+        d3=literary_work.objects.filter(lang=lan,author_name__icontains=search)
+        d4=literary_work.objects.filter(lang=lan,publisher__icontains=search)
+        d5=literary_work.objects.filter(lang=lan,language1__icontains=search)
+        data1=d1.union(d2,d3,d4,d5)
+        data=data1.order_by('id')
+    else:
+        data=literary_work.objects.filter(lang=lan)
     return render(request,'citation/sindhi.html',context={'lang':lang,'data':data})
 
 def main_page_id(request,id):
@@ -271,7 +281,17 @@ def main_page_id(request,id):
     lan=language.objects.filter(id=id)[0]
     for i in lang:
         i.num=i.literary_work_set.count()
-    data=literary_work.objects.filter(lang=lan)
+    if request.method=='POST':
+        search=request.POST.get('searched')
+        d1=literary_work.objects.filter(lang=lan,name__icontains=search)
+        d2=literary_work.objects.filter(lang=lan,isbn_no__icontains=search)
+        d3=literary_work.objects.filter(lang=lan,author_name__icontains=search)
+        d4=literary_work.objects.filter(lang=lan,publisher__icontains=search)
+        d5=literary_work.objects.filter(lang=lan,language1__icontains=search)
+        data1=d1.union(d2,d3,d4,d5)
+        data=data1.order_by('id')
+    else:
+        data=literary_work.objects.filter(lang=lan)
     return render(request,'citation/sindhi.html',context={'lang':lang,'data':data})    
 
 
