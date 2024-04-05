@@ -43,7 +43,7 @@ def admin_page(request):
         if user is not None:
             login(request,user)
             return redirect('index')
-    return render(request,"citation/admin_page.html")
+    return render(request,"auth/admin_page.html")
 
 def index(request):
     context={
@@ -274,7 +274,7 @@ def main_page(request):
         data=data1.order_by('id')
     else:
         data=literary_work.objects.filter(lang=lan)
-    return render(request,'citation/sindhi.html',context={'lang':lang,'data':data})
+    return render(request,'citation/sindhi.html',context={'lang':lang,'data':data[0:15]})
 
 def main_page_id(request,id):
     lang=language.objects.all()

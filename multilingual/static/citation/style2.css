@@ -108,7 +108,7 @@ body {
     box-shadow: var(--box-shadow);
     top:110%; right:7%;
     height:6rem;
-    width:80rem;
+    width:60rem;
     padding:1rem;
     display: none;
 }
@@ -119,7 +119,7 @@ body {
 }
 
 .header .search-form #search-box{
-    width:50%;
+    width:100%;
     border:var(--border);
     border-radius: .5rem;
     padding:1rem;
@@ -127,7 +127,7 @@ body {
     color:var(--black);
     height: 100%;
 }
-.header .search-form #type_of_search{
+/* .header .search-form #type_of_search{
     width:20%;
     border:var(--border);
     border-radius: .5rem;
@@ -135,7 +135,7 @@ body {
     font-size: 1.7rem;
     color:var(--black);
     height: 100%;
-}
+} */
 
 .header .search-form button{
     font-size: 2rem;
@@ -194,8 +194,13 @@ main {
     color: var(--light-color);
     margin-bottom: 10px;
 }
+.sidebar{
+    padding: 1rem 1.5rem;
+    background-color: #fff;
+}
 .sidebar .box{
-    border:var(--border);
+    border:0;
+    border-bottom: var(--border);
     border-radius: .5rem;
     overflow:hidden;
     background:#fff;
@@ -203,7 +208,9 @@ main {
 }
 
 .sidebar .box .title{
+    margin-top: 2rem;
     padding:1.5rem;
+    border-radius: 1rem ;
     font-size: 2rem;
     color:#fff;
     background:var(--blue);
@@ -327,13 +334,11 @@ main {
     background:#fff;
     border-radius: 1rem;
     align-items: center;
-    box-shadow: var(--box-shadow);
     top:10%; right:7%;
     height:6rem;
     width:15rem;
     padding:.5rem;
     color:var(--black);
-    background:#eee;
     font-size: 1.7rem;
     cursor: pointer;
     display: none;
