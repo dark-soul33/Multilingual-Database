@@ -15,5 +15,6 @@ urlpatterns = [
     path('malayalam/',views.Malayalam, name="malayalam"),
     path('literaryDesc/<int:id>',views.sindhidesc, name="sindhidesc"),
     path('northeast/<int:id>',views.northeastdesc, name="northeastdesc"),
-    path('malayalam/<int:id>',views.malayalamdesc, name="malayalamdesc")
+    path('malayalam/<int:id>',views.malayalamdesc, name="malayalamdesc"),
+    path('textextract',views.textextr,name="textextr")
 ]

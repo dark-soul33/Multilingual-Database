@@ -1,0 +1,18 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>PDF Text Extractor</title>
+</head>
+<body>
+  <h1>PDF Text Extractor</h1>
+  <form enctype="multipart/form-data" method="post">
+    {% csrf_token %}
+    <input type="file" id="pdfFileInput" name="pdfFile" accept='.pdf'>
+    <button type="submit">Extract Text</button>
+  </form>
+  <div id="output">{{data}}</div>
+
+</body>
+</html>

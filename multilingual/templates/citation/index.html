@@ -189,11 +189,47 @@
     <div class="container">
       <form method="post" enctype="multipart/form-data">
         {% csrf_token %}
-        <h3>Add Data via Excel Sheet</h3>
+        <h3>Add New Data via Excel Sheet</h3>
         <input type="file" name="excel_sheet" accept=".xlsx, .xls" />
         <div>
           <label for="name">Name of new data set</label>
           <input type="text" id="name" name="newlang" required />
+        </div>
+        <div>
+          <label for="title">Column no. of Title:</label>
+          <input type="number" id="title" name="title" required />
+        </div>
+        <div>
+          <label for="author">Column no. of Author Name:</label>
+          <input type="number" id="author" name="author" required />
+        </div>
+        <div>
+          <label for="isbn">Column no. of ISBN Number:</label>
+          <input type="number" id="isbn" name="isbn" required />
+        </div>
+        <div>
+          <label for="publisher">Column no. of Publisher:</label>
+          <input type="number" id="publisher" name="publisher" required />
+        </div>
+        <div>
+          <label for="language">Column no. of Language:</label>
+          <input type="number" id="language" name="language" required />
+        </div>
+        <button type="submit" class="btn">Upload</button>
+      </form>
+    </div>
+    <div class="container">
+      <form method="post" enctype="multipart/form-data">
+        {% csrf_token %}
+        <h3>Add to existing Data via Excel Sheet</h3>
+        <input type="file" name="excel_sheet" accept=".xlsx, .xls" />
+        <div>
+          <label for="name">Name of data set</label>
+          <select id="name" name="lang">
+            {% for i in lang %}
+            <option value="{{i.name}}">{{i.name}}</option>
+            {% endfor %}
+          </select>
         </div>
         <div>
           <label for="title">Column no. of Title:</label>

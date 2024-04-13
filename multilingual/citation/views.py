@@ -1,11 +1,14 @@
 from django.shortcuts import render,redirect
 from django.http import HttpResponse
 import os
+from io import BytesIO
+from PyPDF2 import PdfReader
 import openpyxl
 from django.conf import settings
 from .models import sindhi,northeast,malayalam,contact,language,literary_work
 from django.contrib.auth.models import User
 from django.contrib.auth import login,logout,authenticate
+from django.core.paginator import EmptyPage, Paginator, PageNotAnInteger
 
 # sindhis=sindhi.objects.all()
 # # print(type(sindhis.author_first_name))
@@ -46,76 +49,82 @@ def admin_page(request):
     return render(request,"auth/admin_page.html")
 
 def index(request):
-    context={
-        'mssg':contact.objects.all(),
-        'lang':language.objects.all()
-    }
-    if request.method=='POST':
-        if 'newlang' in request.POST:
-            file=request.FILES['excel_sheet']
-            newlang=request.POST.get('newlang')
-            title=int(request.POST.get('title'))
-            author=int(request.POST.get('author'))
-            isbn=int(request.POST.get('isbn'))
-            publisher=int(request.POST.get('publisher'))
-            langua=int(request.POST.get('language'))
-            lan=language.objects.create(name=newlang)
-            lan.save()
-            nums=[title,author,isbn,publisher,langua]
-            workbook = openpyxl.load_workbook(file)
-            sheet = workbook.worksheets[0]
-            headings = [str(cell.value) for cell in sheet[1]]
-            col=sheet.max_column
-            for row in sheet.iter_rows(min_row=2,values_only=True):
-                t=str(row[title-1])
-                a=str(row[author-1])
-                s=str(row[isbn-1])
-                p=str(row[publisher-1])
-                if(langua==0):
-                    l=newlang
-                else:
-                    l=str(row[langua-1])
-                o=''
-                for i in range(1,col+1):
-                    if i not in nums:
-                        o+=headings[i-1]+': '+str(row[i-1])+'#'
-                lit=literary_work.objects.create(name=t,author_name=a,isbn_no=s,publisher=p,language1=l,others=o,lang=lan)
-                lit.save()
-        else:
-            file=request.FILES['excel_sheet']
-            lang=request.POST.get('lang')
-            title=int(request.POST.get('title'))
-            author=int(request.POST.get('author'))
-            isbn=int(request.POST.get('isbn'))
-            publisher=int(request.POST.get('publisher'))
-            langua=int(request.POST.get('language'))
-            lan=language.objects.filter(name=lang)[0]
-            nums=[title,author,isbn,publisher,langua]
-            workbook = openpyxl.load_workbook(file)
-            sheet = workbook.worksheets[0]
-            headings = [str(cell.value) for cell in sheet[1]]
-            col=sheet.max_column
-            for row in sheet.iter_rows(min_row=2,values_only=True):
-                t=str(row[title-1])
-                a=str(row[author-1])
-                s=str(row[isbn-1])
-                p=str(row[publisher-1])
-                if(langua==0):
-                    l=newlang
-                else:
-                    l=str(row[langua-1])
-                o=''
-                for i in range(1,col+1):
-                    if i not in nums:
-                        o+=headings[i-1]+': '+str(row[i-1])+'#'
-                lit=literary_work.objects.create(name=t,author_name=a,isbn_no=s,publisher=p,language1=l,others=o,lang=lan)
-                lit.save()
+    if request.user.is_superuser:
+        context={
+            'mssg':contact.objects.all(),
+            'lang':language.objects.all()
+        }
+        if request.method=='POST':
+            if 'newlang' in request.POST:
+                file=request.FILES['excel_sheet']
+                newlang=request.POST.get('newlang')
+                title=int(request.POST.get('title'))
+                author=int(request.POST.get('author'))
+                isbn=int(request.POST.get('isbn'))
+                publisher=int(request.POST.get('publisher'))
+                langua=int(request.POST.get('language'))
+                lan=language.objects.create(name=newlang)
+                lan.save()
+                nums=[title,author,isbn,publisher,langua]
+                workbook = openpyxl.load_workbook(file)
+                sheet = workbook.worksheets[0]
+                headings = [str(cell.value) for cell in sheet[1]]
+                col=sheet.max_column
+                for row in sheet.iter_rows(min_row=2,values_only=True):
+                    t=str(row[title-1])
+                    a=str(row[author-1])
+                    s=str(row[isbn-1])
+                    p=str(row[publisher-1])
+                    if(langua==0):
+                        l=newlang
+                    else:
+                        l=str(row[langua-1])
+                    o=''
+                    for i in range(1,col+1):
+                        if i not in nums:
+                            o+=headings[i-1]+': '+str(row[i-1])+'#'
+                    lit=literary_work.objects.create(name=t,author_name=a,isbn_no=s,publisher=p,language1=l,others=o,lang=lan)
+                    lit.save()
+            else:
+                file=request.FILES['excel_sheet']
+                lang=request.POST.get('lang')
+                title=int(request.POST.get('title'))
+                author=int(request.POST.get('author'))
+                isbn=int(request.POST.get('isbn'))
+                publisher=int(request.POST.get('publisher'))
+                langua=int(request.POST.get('language'))
+                lan=language.objects.filter(name=lang)[0]
+                nums=[title,author,isbn,publisher,langua]
+                workbook = openpyxl.load_workbook(file)
+                sheet = workbook.worksheets[0]
+                headings = [str(cell.value) for cell in sheet[1]]
+                col=sheet.max_column
+                for row in sheet.iter_rows(min_row=2,values_only=True):
+                    t=str(row[title-1])
+                    a=str(row[author-1])
+                    s=str(row[isbn-1])
+                    p=str(row[publisher-1])
+                    if(langua==0):
+                        l=newlang
+                    else:
+                        l=str(row[langua-1])
+                    o=''
+                    for i in range(1,col+1):
+                        if i not in nums:
+                            o+=headings[i-1]+': '+str(row[i-1])+'#'
+                    lit=literary_work.objects.create(name=t,author_name=a,isbn_no=s,publisher=p,language1=l,others=o,lang=lan)
+                    lit.save()
 
-    return render(request,"citation/index.html",context=context)
+        return render(request,"citation/index.html",context=context)
+    else:
+        return redirect(admin_page)
 
 def contacts(request):
-    context={'mssg':contact.objects.all()}
-    return render(request,'citation/cont.html',context)
+    if request.user.is_superuser:
+        context={'mssg':contact.objects.all()}
+        return render(request,'citation/cont.html',context)
+    else:
+        return redirect(admin_page)
 
 def delcont(request,id):
     cont=contact.objects.filter(id=id)[0]
@@ -274,7 +283,17 @@ def main_page(request):
         data=data1.order_by('id')
     else:
         data=literary_work.objects.filter(lang=lan)
-    return render(request,'citation/sindhi.html',context={'lang':lang,'data':data[0:15]})
+    pagin=Paginator(data,per_page=100)
+    page_number = request.GET.get('page')  # Get the current page number
+    try:
+        mod_page = pagin.page(page_number)
+    except PageNotAnInteger:
+        # If page is not an integer, deliver first page
+        mod_page = pagin.page(1)
+    except EmptyPage:
+        # If page is out of range (e.g., 9999), deliver last page of results
+        mod_page = pagin.page(pagin.num_pages)
+    return render(request,'citation/sindhi.html',context={'lang':lang,'data':mod_page})
 
 def main_page_id(request,id):
     lang=language.objects.all()
@@ -292,6 +311,30 @@ def main_page_id(request,id):
         data=data1.order_by('id')
     else:
         data=literary_work.objects.filter(lang=lan)
-    return render(request,'citation/sindhi.html',context={'lang':lang,'data':data})    
+    pagin=Paginator(data,per_page=100)
+    page_number = request.GET.get('page')  # Get the current page number
+    try:
+        mod_page = pagin.page(page_number)
+    except PageNotAnInteger:
+        # If page is not an integer, deliver first page
+        mod_page = pagin.page(1)
+    except EmptyPage:
+        # If page is out of range (e.g., 9999), deliver last page of results
+        mod_page = pagin.page(pagin.num_pages)
+    return render(request,'citation/sindhi.html',context={'lang':lang,'data':mod_page})  
 
-
+def textextr(request):
+    text = ""
+    if request.method == 'POST':
+        file = request.FILES.get('pdfFile')
+        if file:
+            pdf_data = file.read()
+            pdf_file = BytesIO(pdf_data)  # Wrap pdf_data in a BytesIO object
+            reader = PdfReader(pdf_file)
+            for page_number in range(len(reader.pages)):
+                page = reader.pages[page_number]
+                text += page.extract_text()
+    context = {'data': text}
+    return render(request, 'citation/text.html', context)
+    
+    
