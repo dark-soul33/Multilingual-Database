@@ -35,6 +35,7 @@ The project shall enable efficient search of data in multiple languages.
 - *Extending existing datasets*: Admin can extend the existing datasets by adding data through excel sheets.
 
 - *Extract text*: Extracts text from PDF files efficiently.
+- *Word cloud*: A word cloud featuring keywords.These keywords are visually prominent, conveying the core functionalities of the text.
 - *Contact Us info.*: Users can send their suggetions or contact the admin through the contact us form and admin gets notified.
 
 ## Installation
@@ -45,7 +46,8 @@ To install the Inventory Management System locally, follow these steps:
 2. Navigate to the project directory: cd multilingual
 3. Install dependencies:</br> pip install django</br>
 pip install pypdf2</br>
-pip install openpyxl
+pip install openpyxl</br>
+pip install wordcloud
 
 ## Usage
 
