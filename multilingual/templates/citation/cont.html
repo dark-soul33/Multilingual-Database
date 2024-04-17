@@ -163,7 +163,7 @@
 
       <nav class="navbar">
         <a href="{% url 'home' %}">Home</a>
-        <a href="admin1/contacts">Notifications</a>
+        <a href="{% url 'admin_page' %}">Return</a>
         {% if user.is_authenticated %}
         <a href="{% url 'logout' %}" class="nav__button-ghost"
           >Logout <i class="fa-solid fa-right-from-bracket"></i

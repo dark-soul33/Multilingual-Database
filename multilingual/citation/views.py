@@ -1,6 +1,7 @@
 from django.shortcuts import render,redirect
 from django.http import HttpResponse
 import os
+import base64
 from io import BytesIO
 from PyPDF2 import PdfReader
 import openpyxl
@@ -9,6 +10,8 @@ from .models import sindhi,northeast,malayalam,contact,language,literary_work
 from django.contrib.auth.models import User
 from django.contrib.auth import login,logout,authenticate
 from django.core.paginator import EmptyPage, Paginator, PageNotAnInteger
+import matplotlib.pyplot as plt
+from wordcloud import WordCloud
 
 # sindhis=sindhi.objects.all()
 # # print(type(sindhis.author_first_name))
@@ -39,14 +42,7 @@ def index2(request):
     return render(request,"citation/index2.html")
 
 def admin_page(request):
-    if request.method=="POST":
-        user=request.POST.get("username")
-        password=request.POST.get("password")
-        user=authenticate(request,username=user,password=password)
-        if user is not None:
-            login(request,user)
-            return redirect('index')
-    return render(request,"auth/admin_page.html")
+    return redirect('index')
 
 def index(request):
     if request.user.is_superuser:
@@ -323,18 +319,37 @@ def main_page_id(request,id):
         mod_page = pagin.page(pagin.num_pages)
     return render(request,'citation/sindhi.html',context={'lang':lang,'data':mod_page})  
 
+from io import BytesIO
+from django.shortcuts import render
+from PyPDF2 import PdfReader
+from wordcloud import WordCloud
+
 def textextr(request):
     text = ""
+    paragraphs = []  # List to hold paragraphs of text
+    wordcloud_base64 = None  # Base64 string for the WordCloud image
+
     if request.method == 'POST':
         file = request.FILES.get('pdfFile')
         if file:
             pdf_data = file.read()
-            pdf_file = BytesIO(pdf_data)  # Wrap pdf_data in a BytesIO object
+            pdf_file = BytesIO(pdf_data)
             reader = PdfReader(pdf_file)
             for page_number in range(len(reader.pages)):
                 page = reader.pages[page_number]
-                text += page.extract_text()
-    context = {'data': text}
-    return render(request, 'citation/text.html', context)
+                page_text = page.extract_text()
+                text += page_text
+                paragraphs.extend(page_text.split('\n\n'))  # Split text into paragraphs
+                
+            # Create a word cloud object
+            wordcloud = WordCloud()
+            wordcloud.generate(text)
+
+            # Convert WordCloud image to base64 string
+            img_buffer = BytesIO()
+            wordcloud.to_image().save(img_buffer, format="PNG")
+            wordcloud_base64 = base64.b64encode(img_buffer.getvalue()).decode()
+
+    return render(request, 'citation/text.html', {'paragraphs': paragraphs, 'wordcloud_base64': wordcloud_base64})
     
     
