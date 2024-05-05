@@ -101,7 +101,7 @@ def index(request):
                     s=str(row[isbn-1])
                     p=str(row[publisher-1])
                     if(langua==0):
-                        l=newlang
+                        l=lang
                     else:
                         l=str(row[langua-1])
                     o=''
