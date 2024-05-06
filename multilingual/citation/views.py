@@ -242,17 +242,42 @@ def sindhidesc(request,id):
     obj=literary_work.objects.filter(id=id)[0]
     st=obj.others
     lis=st.split('#')
+    author = obj.author_name
+    book_title = obj.name
+    publication = obj.publisher
+    isbn = obj.isbn_no
+    keyword = lis[0]
+    place = lis[1]
+
+    citation = f"{author}. \"{book_title},\" {publication}, {keyword}, ISBN: {isbn}, {place}."
     context={
         'data':obj,
-        'list':lis
+        'list':lis,
+        'citation':citation 
     }
     return render(request,"citation/sindhidesc.html",context)
 
+def generate_citation(data):
+    citation = f"<h1>{data['title']}</h1>\n"
+    citation += "<div class='book-info'>\n"
+    citation += f"<p><strong>Author:</strong> {data['author_name']}</p>\n"
+    citation += f"<p><strong>Publication:</strong> {data['publisher']}</p>\n"
+    citation += f"<p><strong>Accession number:</strong> {data['accession_number']}</p>\n"
+    citation += f"<p><strong>Class number:</strong> {data['class_number']}</p>\n"
+    citation += f"<p><strong>Year:</strong> {data['year']}</p>\n"
+    citation += f"<p><strong>Collection:</strong> {data['collection']}</p>\n"
+    citation += f"<p><strong>Language:</strong> {data['language']}</p>\n"
+    citation += "<p><strong>Open Access:</strong> No</p>\n"
+    citation += "</div>"
+    return citation
+
 def northeastdesc(request,id):
     obj=northeast.objects.filter(id=id)[0]
-    
+    citation = generate_citation(obj)
+    print(citation)
     context={
-        'data':obj
+        'data':obj,
+        "citation":citation 
     }
     return render(request,"citation/northeastdesc.html",context)
 

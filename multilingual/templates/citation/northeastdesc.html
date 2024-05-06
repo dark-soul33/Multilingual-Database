@@ -4,7 +4,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Data Structures and Algorithms on JSTOR</title>
+    <title>article</title>
     <style>
         /* Reset CSS */
         :root{
@@ -99,11 +99,12 @@
         }
 
         .abstract {
+            margin-left: 20px;
             margin-bottom: 20px;
             padding: 20px;
             background-color: #f9f9f9;
-            border-left: 4px solid #007bff;
-        }
+            border-left: 4px solid var(--blue);
+          }
 
         .abstract h2 {
             margin-bottom: 10px;
@@ -130,28 +131,6 @@
             color: #666;
         }
 
-        .btn-container {
-            display: flex;
-            justify-content: center;
-            margin-top: 20px;
-        }
-
-        .btn {
-            padding: 10px 20px;
-            border: none;
-            border-radius: 5px;
-            cursor: pointer;
-            color: #fff;
-            background-color: #007bff;
-            transition: background-color 0.3s ease;
-            text-transform: uppercase;
-            font-weight: bold;
-            letter-spacing: 1px;
-        }
-
-        .btn:hover {
-            background-color: #0056b3;
-        }
 
         @media (max-width: 768px) {
             .container {
@@ -162,6 +141,46 @@
                 padding: 10px;
             }
         }
+
+        /* Styles for the collapsible citation */
+      .collapsible {
+        padding: 10px 30px;
+        border: 10px;
+        margin-left: 20px;
+        border-radius: 5px;
+        cursor: pointer;
+        color: #2d2d2d;
+        background-color: #ceecff;
+        text-transform: uppercase;
+        font-weight: bold;
+        letter-spacing: 1px;
+        transition: max-height 0.3s ease-out;
+        overflow: hidden;
+      }
+    
+      .collapsible.active {
+        max-height: 300px; /* Adjust as needed */
+      }
+    
+      .citation-content {
+        padding: 10px;
+    }
+    .citation-content {
+        display: none;
+        margin-bottom: 20px;
+        margin-left: 20px;
+        padding: 20px;
+        background-color: #f9f9f9;
+        border-left: 4px solid var(--blue);
+      }
+
+      .citation-content h2 {
+        margin-bottom: 10px;
+        color: #002136;
+      }
+      .citation-content button {
+        margin-left: 30px;
+      }
     </style>
 </head>
 
@@ -196,36 +215,46 @@
                 Not available for this article
             </p>
         </div>
-        <!-- <div class="related-books">
-            <h3>Related Books</h3>
-            <ul>
-                <li>Introduction to Algorithms by Thomas H. Cormen, Charles E. Leiserson, Ronald L. Rivest, and Clifford
-                    Stein</li>
-                <li>Algorithms by Robert Sedgewick and Kevin Wayne</li>
-                <li>Data Structures and Algorithm Analysis in Java by Mark Allen Weiss</li>
-            </ul>
-        </div> -->
-        <div class="btn-container">
-            <button class="btn" onclick="shareBook()">Share</button>
-                
-            <button class="btn" onclick="saveBook()">Save</button>
-               
-            <button class="btn" onclick="citeBook()">Cite</button>
+        <button class="collapsible" onclick="toggleCitation()">Cite <i class="fa-solid fa-chevron-down"></i> </button>
+    
+        <!-- Collapsible citation content -->
+        <div class="citation-content">
+          <h3 style="margin-left: 20px ;">MLA-Format</h3>
+          <h2 id="citationText">{{citation}}</h2>
+          <button onclick="copyCitation()">Copy <i class="fa-solid fa-copy"></i></button>
         </div>
     </div>
 
     <script>
-        function shareBook() {
-            alert('Share functionality is not implemented yet.');
-        }
-
-        function saveBook() {
-            alert('Save functionality is not implemented yet.');
-        }
-
         function citeBook() {
-            alert('Cite functionality is not implemented yet.');
-        }
+            // Display citation in pop-up
+            var popup = document.getElementById("citationPopup");
+            popup.style.display = "block";
+          }
+    
+          function toggleCitation() {
+            var citationContent = document.querySelector('.citation-content');
+            var button = document.querySelector('.collapsible');
+      
+            // Toggle active class and display citation content
+            citationContent.style.display = citationContent.style.display === 'block' ? 'none' : 'block';
+            button.classList.toggle('active');
+      
+          }
+    
+          function copyCitation() {
+            // Copy citation text to clipboard
+            var citationText = document.getElementById("citationText");
+            var range = document.createRange();
+            range.selectNode(citationText);
+            window.getSelection().removeAllRanges();
+            window.getSelection().addRange(range);
+            document.execCommand("copy");
+            window.getSelection().removeAllRanges();
+      
+            // Alert user after copying
+            alert("Citation copied to clipboard!");
+          }
     </script>
 </body>
 
