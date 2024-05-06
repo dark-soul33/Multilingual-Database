@@ -290,7 +290,7 @@ def malayalamdesc(request,id):
 
 def main_page(request):
     lang=language.objects.all()
-    lan=language.objects.filter(name='Sindhi')[0]
+    lan=language.objects.all()[0]
     for i in lang:
         i.num=i.literary_work_set.count()
     if request.method=='POST':
